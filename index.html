@@ -54,7 +54,7 @@
                     <div class="col-md-10">
                       <input
                         type="text"
-                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light"
+                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light tickets-name
                         id="tickets-name"
                         placeholder="請填寫套票名稱"
                       />
@@ -72,7 +72,7 @@
                     <div class="col-md-10">
                       <input
                         type="url"
-                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light"
+                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light tickets-imgUrl"
                         id="img-url"
                         placeholder="請填寫圖片網址"
                       />
@@ -89,13 +89,13 @@
                     </div>
                     <div class="col-md-10">
                       <select
-                        class="form-select border-0 border-bottom border-primary bg-light rounded-0"
+                        class="form-select border-0 border-bottom border-primary bg-light rounded-0 tickets-area"
                         name="attractions-area"
                         id="attractions-area"
                       >
-                        <option value="臺北市">臺北市</option>
-                        <option value="臺中市">臺中市</option>
-                        <option value="高雄市">高雄市</option>
+                        <option value="台北">台北</option>
+                        <option value="台中">台中</option>
+                        <option value="高雄">高雄</option>
                       </select>
                     </div>
                   </div>
@@ -103,7 +103,7 @@
                   <div class="row align-items-center g-md-3 mb-4 mb-md-3">
                     <div class="col-md-2">
                       <label
-                        for="tickets-money"
+                        for="tickets-price"
                         class="form-label text-primary fw-bold"
                         >套票金額</label
                       >
@@ -111,8 +111,8 @@
                     <div class="col-md-10">
                       <input
                         type="number"
-                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light"
-                        id="tickets-money"
+                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light tickets-price"
+                        id="tickets-price"
                         placeholder="請填寫套票金額"
                       />
                     </div>
@@ -121,16 +121,16 @@
                   <div class="row align-items-center g-md-3 mb-4 mb-md-3">
                     <div class="col-md-2">
                       <label
-                        for="tickets-number"
+                        for="tickets-group"
                         class="form-label text-primary fw-bold"
                         >套票組數</label
                       >
                     </div>
                     <div class="col-md-10">
                       <input
-                        type="text"
-                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light"
-                        id="tickets-number"
+                        type="number"
+                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light tickets-group"
+                        id="tickets-groupr"
                         placeholder="請填寫套票組數"
                       />
                     </div>
@@ -139,16 +139,16 @@
                   <div class="row align-items-center g-md-3 mb-4 mb-md-3">
                     <div class="col-md-2">
                       <label
-                        for="tickets-star"
+                        for="tickets-rate"
                         class="form-label text-primary fw-bold"
                         >套票星級</label
                       >
                     </div>
                     <div class="col-md-10">
                       <input
-                        type="text"
-                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light"
-                        id="tickets-star"
+                        type="number"
+                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light tickets-rate"
+                        id="tickets-rate"
                         placeholder="請填寫套票星級"
                       />
                     </div>
@@ -164,7 +164,7 @@
                     </div>
                     <div class="col-md-10">
                       <textarea
-                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light resize-none"
+                        class="form-control border-0 border-bottom border-primary rounded-0 bg-light resize-none tickets-description"
                         name="tickets-description"
                         id="tickets-description"
                         rows="3"
@@ -174,7 +174,7 @@
                   </div>
                   <button
                     type="submit"
-                    class="btn btn-primary text-white d-flex ms-auto px-4"
+                    class="btn btn-primary text-white d-flex ms-auto px-4 add-ticket-btn"
                   >
                     新增套票
                   </button>
@@ -188,20 +188,23 @@
 
     <main class="bg-light">
       <div class="container py-5">
+        <!-- 搜尋 -->
         <div class="row align-items-center mb-5 gy-2">
           <div class="col-md-4">
-            <select class="form-select w-75 d-flex ms-auto">
-              <option value="臺北市">臺北市</option>
-              <option value="臺中市">臺中市</option>
-              <option value="高雄市">高雄市</option>
+            <select class="form-select w-75 d-flex ms-auto area-filter">
+              <option value="全部">全部</option>
+              <option value="台北">台北</option>
+              <option value="台中">台中</option>
+              <option value="高雄">高雄</option>
             </select>
           </div>
-          <div class="col-md-8">
-            <p class="text-secondary mb-0 text-end text-md-start">本次搜尋共6筆資料</p>
+          <div class="col-md-8 area-filter-num">
+            <!-- <p class="text-secondary mb-0 text-end text-md-start area-filter-num">本次搜尋共6筆資料</p> -->
           </div>
         </div>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gy-5">
-          <div class="col">
+        <!-- 套票卡片 -->
+        <ul class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gy-5 list-unstyled ticket-card-area">
+          <!-- <li class="col">
             <div class="card shadow border-0 h-100">
               <div class="card-header p-0 border-0 mb-2 position-relative">
                 <img
@@ -243,8 +246,8 @@
                 </p>
               </div>
             </div>
-          </div>
-          <div class="col">
+          </li> -->
+          <!-- <div class="col">
             <div class="card shadow border-0 h-100">
               <div class="card-header p-0 border-0 mb-2 position-relative">
                 <img
@@ -462,9 +465,10 @@
                 </p>
               </div>
             </div>
-          </div>
-        </div>
+          </div> -->
+        </ul>
       </div>
     </main>
+    <script src="./js/all.js"></script>
   </body>
 </html>
