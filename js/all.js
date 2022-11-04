@@ -38,9 +38,9 @@ let data = [
 
 const list = document.querySelector(".ticket-card-area");
 //渲染畫面
-function render() {
+function render(renderData) {
   let str = "";
-  data.forEach(function (item, index) {
+  renderData.forEach(function (item, index) {
     str += `<li class="col">
   <div class="card shadow border-0 h-100">
     <div class="card-header p-0 border-0 mb-2 position-relative">
@@ -79,7 +79,7 @@ function render() {
   });
   list.innerHTML = str;
 }
-render();
+render(data);
 
 //新增套票
 const name = document.querySelector(".tickets-name");
@@ -108,8 +108,8 @@ addTicketBtn.addEventListener("click", function (e) {
     area.value == "" ||
     group.value == "" ||
     price.value == "" ||
-    rate.value == ""||
-    description.value == "" 
+    rate.value == "" ||
+    description.value == ""
   ) {
     alert("欄位不可為空白");
   } else if (
@@ -118,16 +118,16 @@ addTicketBtn.addEventListener("click", function (e) {
     area.value &&
     group.value &&
     price.value &&
-    rate.value&&
+    rate.value &&
     description.value
   ) {
-    if (parseInt(group.value) <=0) {
+    if (parseInt(group.value) <= 0) {
       alert("套票組數輸入錯誤");
-    } else if (parseInt(price.value) <=0) {
+    } else if (parseInt(price.value) <= 0) {
       alert("套票金額輸入錯誤");
     } else if (parseInt(rate.value) <= 0) {
       alert("套票星級輸入錯誤");
-    } else if (description.value.length>100) {
+    } else if (description.value.length > 100) {
       alert("套票描述超過100字");
     } else {
       data.push(obj);
@@ -144,92 +144,31 @@ addTicketBtn.addEventListener("click", function (e) {
   }
 });
 
-
 //篩選器
 const areaFilter = document.querySelector(".area-filter");
 const areaFilterNum = document.querySelector(".area-filter-num");
 areaFilter.addEventListener("click", function (e) {
+  let filterData = [];
   let str = "";
-  let count = 0;
-  data.forEach(function (item, index) {
-    if(areaFilter.value=="全部"){
-      str += `<li class="col">
-      <div class="card shadow border-0 h-100">
-        <div class="card-header p-0 border-0 mb-2 position-relative">
-          <img
-            src="${item.imgUrl}"
-            alt="${item.name}"
-            class="card-img-top"
-          />
-          <div
-            class="badge bg-info px-3 fs-5 position-absolute top-0 start-0 translate-middle-y rounded-0 rounded-end"
-          >${item.area}</div>
-          <div
-            class="badge bg-primary py-2 px-2 position-absolute top-100 start-0 translate-middle-y rounded-0 rounded-end"
-          >${item.rate}</div>
-        </div>
-        <div class="card-body">
-          <div
-            class="card-title text-primary h4 border-bottom border-primary fw-bold pb-1 mb-3"
-          >${item.name}</div>
-          <p class="text-secondary mb-0">${item.description}</p>
-        </div>
-        <div
-          class="card-footer border-0 bg-white d-flex justify-content-between align-items-center mb-1"
-        >
-          <p class="text-primary fw-bold mb-0">
-            <i class="bi bi-exclamation-circle-fill"></i> 剩下最後 ${item.group} 組
-          </p>
-          <p class="text-primary fw-bold mb-0 d-flex align-items-center">
-            TWD<span class="fw-bold h2 d-inline-block mb-0 ms-1"
-              >${item.price}</span
-            >
-          </p>
-        </div>
-      </div>
-    </li>`;
-    } else if (areaFilter.value == item.area) {
-      str += `<li class="col">
-      <div class="card shadow border-0 h-100">
-        <div class="card-header p-0 border-0 mb-2 position-relative">
-          <img
-            src="${item.imgUrl}"
-            alt="${item.name}"
-            class="card-img-top"
-          />
-          <div
-            class="badge bg-info px-3 fs-5 position-absolute top-0 start-0 translate-middle-y rounded-0 rounded-end"
-          >${item.area}</div>
-          <div
-            class="badge bg-primary py-2 px-2 position-absolute top-100 start-0 translate-middle-y rounded-0 rounded-end"
-          >${item.rate}</div>
-        </div>
-        <div class="card-body">
-          <div
-            class="card-title text-primary h4 border-bottom border-primary fw-bold pb-1 mb-3"
-          >${item.name}</div>
-          <p class="text-secondary mb-0">${item.description}</p>
-        </div>
-        <div
-          class="card-footer border-0 bg-white d-flex justify-content-between align-items-center mb-1"
-        >
-          <p class="text-primary fw-bold mb-0">
-            <i class="bi bi-exclamation-circle-fill"></i> 剩下最後 ${item.group} 組
-          </p>
-          <p class="text-primary fw-bold mb-0 d-flex align-items-center">
-            TWD<span class="fw-bold h2 d-inline-block mb-0 ms-1"
-              >${item.price}</span
-            >
-          </p>
-        </div>
-      </div>
-    </li>`;
-    } else {
-      return;
-    }
-    count++;
+  let areaAry = [];
+  data.forEach(function (item) {
+    areaAry.push(item.area);
   });
-  list.innerHTML = str;
-  areaFilterNum.innerHTML = `
-  <p class="text-secondary mb-0 text-end text-md-start area-filter-num">本次搜尋共${count}筆資料</p>`;
+  data.filter(function (item) {
+    if (areaFilter.value === "全部") {
+      render(data);
+      areaFilterNum.innerHTML = `<p class="text-secondary mb-0 text-end text-md-start area-filter-num">本次搜尋共${data.length}筆資料</p>`;
+    } else if (areaFilter.value === item.area) {
+      filterData.push(item);
+      render(filterData);
+      areaFilterNum.innerHTML = `<p class="text-secondary mb-0 text-end text-md-start area-filter-num">本次搜尋共${filterData.length}筆資料</p>`;
+    }else if (areaAry.includes(areaFilter.value) === false) {
+      str = `<li class="text-center text-primary fw-bold d-flex flex-column mx-auto">
+    <img class="img-fluid" src="./images/no_found.png" alt="not found">
+    <p class="fs-3 mb-0">查無此關鍵資料</p>
+  </li>`;
+      list.innerHTML = str;
+      areaFilterNum.innerHTML = `<p class="text-secondary mb-0 text-end text-md-start area-filter-num">本次搜尋共0筆資料</p>`;
+    }
+  });
 });
